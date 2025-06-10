@@ -1,0 +1,156 @@
+<h2 class="text-xl font-semibold mb-4">
+  {{ isViewMode ? 'View Book' : (isEditMode ? 'Edit Book' : 'Add New Book') }}
+</h2>
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="space-y-4 p-4 bg-gray-50 rounded-lg shadow-md">
+  <!-- Book Name and Author -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-group">
+      <input type="text" placeholder="Book Name" id="book_name" formControlName="book_name"
+        class="w-full p-2 rounded-md placeholder-gray-400 placeholder:text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+        [ngClass]="{'border-red-500': bookForm.get('book_name')?.invalid && bookForm.get('book_name')?.touched}">
+      <div *ngIf="bookForm.get('book_name')?.invalid && bookForm.get('book_name')?.touched" class="text-red-500 text-xs mt-1">
+        <span *ngIf="bookForm.get('book_name')?.errors?.['required']">Book name is required</span>
+        <span *ngIf="bookForm.get('book_name')?.errors?.['maxlength']">Book name cannot exceed 100 characters</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" placeholder="Author" id="book_author" formControlName="book_author"
+        class="w-full p-2 rounded-md placeholder-gray-400 placeholder:text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+        [ngClass]="{'border-red-500': bookForm.get('book_author')?.invalid && bookForm.get('book_author')?.touched}">
+      <div *ngIf="bookForm.get('book_author')?.invalid && bookForm.get('book_author')?.touched" class="text-red-500 text-xs mt-1">
+        Author name is required
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ISBN and Publication -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-group">
+      <input type="text" placeholder="ISBN" name="book_isbn" id="book_isbn" formControlName="book_isbn"
+        class="w-full p-2 rounded-md placeholder-gray-400 placeholder:text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+        [ngClass]="{'border-red-500': bookForm.get('book_isbn')?.invalid && bookForm.get('book_isbn')?.touched}">
+      <div *ngIf="bookForm.get('book_isbn')?.invalid && bookForm.get('book_isbn')?.touched" class="text-red-500 text-xs mt-1">
+        <span *ngIf="bookForm.get('book_isbn')?.errors?.['required']">ISBN is required</span>
+        <span *ngIf="bookForm.get('book_isbn')?.errors?.['pattern']">ISBN must be 10-17 digits (hyphens allowed)</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" placeholder="Publication" name="book_publication"  id="book_publication" formControlName="book_publication"
+        class="w-full p-2 rounded-md placeholder-gray-400 placeholder:text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+        [ngClass]="{'border-red-500': bookForm.get('book_publication')?.invalid && bookForm.get('book_publication')?.touched}">
+      <div *ngIf="bookForm.get('book_publication')?.invalid && bookForm.get('book_publication')?.touched" class="text-red-500 text-xs mt-1">
+        Publication is required
+      </div>
+    </div>
+  </div>
+
+  <!-- Condition and Price -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-group">
+<select formControlName="book_condition"
+  class="w-full p-2 rounded-md border border-gray-300 text-sm"
+  [ngClass]="{'border-red-500': bookForm.get('book_condition')?.invalid && bookForm.get('book_condition')?.touched}">
+  <option value="" disabled>Select Condition</option>
+  <option *ngFor="let condition of bookConditions" [value]="condition.value">
+    {{ condition.label }}
+  </option>
+</select>
+
+      <div *ngIf="bookForm.get('book_condition')?.invalid && bookForm.get('book_condition')?.touched" class="text-red-500 text-xs mt-1">
+        Condition is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="number" placeholder="Price" formControlName="book_price"
+        class="w-full p-2 rounded-md placeholder-gray-400 placeholder:text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+        [ngClass]="{'border-red-500': bookForm.get('book_price')?.invalid && bookForm.get('book_price')?.touched}">
+      <div *ngIf="bookForm.get('book_price')?.invalid && bookForm.get('book_price')?.touched" class="text-red-500 text-xs mt-1">
+        <span *ngIf="bookForm.get('book_price')?.errors?.['required']">Price is required</span>
+        <span *ngIf="bookForm.get('book_price')?.errors?.['min']">Price must be greater than 0</span>
+        <span *ngIf="bookForm.get('book_price')?.errors?.['pattern']">Price format is invalid (e.g. 10.99)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category and Subcategory -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="form-group">
+      <select formControlName="category_id" (change)="onCategoryChange($event)"
+        class="w-full p-2 rounded-md border border-gray-300 bg-white text-gray-700 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+        [ngClass]="{'border-red-500': bookForm.get('category_id')?.invalid && bookForm.get('category_id')?.touched}">
+        <option value="" disabled>Select Category</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.category_name }}
+        </option>
+      </select>
+      <div *ngIf="bookForm.get('category_id')?.invalid && bookForm.get('category_id')?.touched" class="text-red-500 text-xs mt-1">
+        Category is required
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="selectedCategory">
+      <select formControlName="subcategory_id" (change)="onSubCategoryChange($event)"
+        class="w-full p-2 rounded-md border border-gray-300 bg-white text-gray-700 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm">
+        <option value="" disabled>Select Sub Category</option>
+        <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">
+          {{ subcategory.subcategory_name }}
+        </option>
+      </select>
+      <!-- No validation error for subcategory as it might not be required -->
+    </div>
+  </div>
+
+  <!-- Subsubcategory (if applicable) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+    *ngIf="selectedSubCategory && hasSubsubcategoriesForSubcategory(selectedSubCategory)">
+    <div class="form-group">
+      <select formControlName="subsubcategory_id"
+        class="w-full p-2 rounded-md border border-gray-300 bg-white text-gray-700 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm">
+        <option value="" disabled>Select Sub SubCategory</option>
+        <option *ngFor="let subsubcategory of getSubsubcategoriesForSubcategory(selectedSubCategory)" [value]="subsubcategory.id">
+          {{ subsubcategory.subsubcategory_name }}
+        </option>
+      </select>
+      <!-- No validation error for subsubcategory as it might not be required -->
+    </div>
+  </div>
+
+  <!-- Book Image -->
+  <div class="grid grid-cols-1 gap-4"  >
+    <div class="form-group" *ngIf="!isViewMode" >
+      <input type="file" (change)="onFileChange($event)"
+        class="w-full h-auto rounded-md border border-gray-300 shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        [ngClass]="{'border-red-500': bookForm.get('book_image')?.invalid && bookForm.get('book_image')?.touched}">
+      <div *ngIf="bookForm.get('book_image')?.invalid && bookForm.get('book_image')?.touched && !isEditMode" class="text-red-500 text-xs mt-1">
+        Book image is required
+      </div>
+    </div>
+    <div *ngIf="imagePreviewUrl" class="mt-2">
+      <img [src]="imagePreviewUrl" alt="Book cover preview" class="h-32 object-contain border border-gray-300 rounded-md">
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex justify-end space-x-4 mt-4" *ngIf="!isViewMode">
+    <!-- <button type="button" (click)="cancel()"
+      class="py-2 px-4 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1">
+      Cancel
+    </button> -->
+    <button type="submit" [disabled]="isSubmitting"
+      class="py-2 px-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors duration-200 font-medium text-sm">
+      {{ isViewMode
+        ? ''
+        : (isSubmitting
+            ? (isEditMode ? 'Updating Book...' : 'Adding Book...')
+            : (isEditMode ? 'Update Book' : 'Add Book')
+          )
+      }}
+    </button>
+  </div>
+</form>
+

@@ -1,0 +1,56 @@
+<div class="relative flex flex-col h-screen w-full bg-gray-100 overflow-hidden" *ngIf="isMessagingRoute()">
+  <!-- Header (fixed on top) -->
+  <div class="bg-blue-100 shadow fixed top-0 left-0 w-full z-50">
+    <app-user-header></app-user-header>
+  </div>
+
+  <!-- Spacer for fixed header height (adjust height as needed) -->
+  <div class="h-[64px]"></div>
+
+  <!-- Main Content with Sidebar -->
+  <div class="flex flex-1 bg-yellow-100 overflow-hidden">
+    <!-- Sidebar always on the left for /all-books -->
+    <div
+      class="bg-slate-200 min-w-[180px] w-1/6"
+      *ngIf="showSidebar()">
+      <app-user-sidebar></app-user-sidebar>
+    </div>
+    <div class="flex-1 w-full">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="bg-yellow-100 text-center" *ngIf="hideFooter()">
+    <app-user-footer></app-user-footer>
+  </div>
+</div>
+
+<!-- Layout for all other routes -->
+<div class="min-h-screen flex flex-col" *ngIf="!isMessagingRoute()">
+  <!-- Header (fixed on top) -->
+  <div class="bg-blue-100 shadow fixed top-0 left-0 w-full z-50">
+    <app-user-header></app-user-header>
+  </div>
+
+  <!-- Spacer for fixed header height (adjust height as needed) -->
+  <div class="h-[64px]"></div>
+
+  <!-- Main Content with Sidebar -->
+  <div class="flex flex-1 bg-yellow-100">
+    <!-- Sidebar always on the left for /all-books -->
+    <div
+      class="bg-slate-200 h-full min-w-[180px] w-1/6"
+      *ngIf="showSidebar()">
+      <app-user-sidebar></app-user-sidebar>
+    </div>
+    <div class="flex-1 w-full">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="bg-yellow-100 text-center" *ngIf="hideFooter()">
+    <app-user-footer></app-user-footer>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="flex flex-col items-center w-full px-2 sm:px-6 lg:px-8 bg-gray-50 min-h-screen overflow-y-auto">
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="flex justify-center items-center py-20 w-full">
+    <div class="animate-spin rounded-full h-14 w-14 border-4 border-blue-500 border-t-transparent"></div>
+  </div>
+
+  <!-- Book Grid -->
+  <div *ngIf="!isLoading" class="w-full max-w-7xl mt-8">
+    <!-- <h2 *ngIf="searchTerm?.trim()" class="text-xl font-semibold text-gray-700 mb-4">
+      Showing results for "{{ searchTerm }}"
+    </h2> -->
+    <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+      <div *ngFor="let book of filteredBooks"
+        class="p-4 rounded-2xl shadow-lg bg-white flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-transparent hover:border-blue-300">
+
+        <!-- Book Image -->
+        <div class="w-35 h-44 mb-2 flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+          <img [src]="getBookImageUrl(book)" alt="{{ book.book_name }}" class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Book Name -->
+        <h2 class="text-lg sm:text-xl font-semibold text-center mb-1 text-gray-800 line-clamp-2">
+          {{ book.book_name }}
+        </h2>
+
+        <!-- Author -->
+        <p class="text-gray-500 text-xs sm:text-sm text-center mb-2 italic truncate w-full">
+          by {{ book.book_author }}
+        </p>
+
+        <!-- Condition and Price -->
+        <div class="flex flex-col items-center space-y-1 w-full mb-2">
+          <span class="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full">
+            {{ book.book_condition | titlecase }}
+          </span>
+          <span class="text-green-600 font-bold text-base sm:text-lg">Rs.{{ book.book_price }}</span>
+        </div>
+
+        <!-- View Details Button -->
+        <button (click)="goToBookDetails(book.id)"
+          class="mt-auto w-full py-2 bg-blue-600 text-white cursor-pointer font-medium text-sm rounded-lg hover:bg-blue-700 transition">
+          View Details
+        </button>
+      </div>
+    </div>
+    <!-- No books found message -->
+    <div *ngIf="filteredBooks.length === 0" class="text-center text-gray-500 py-10">
+      No books found.
+    </div>
+  </div>
+</div>

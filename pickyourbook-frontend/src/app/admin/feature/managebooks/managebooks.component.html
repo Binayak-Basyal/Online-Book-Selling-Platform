@@ -1,0 +1,92 @@
+<div class="bg-gray-100 p-2 flex flex-col h-full space-y-8">
+
+  <div class="bg-white shadow-md rounded-lg p-4">
+    <h1 class="text-2xl font-bold text-gray-700 mb-4">Books</h1>
+    
+    <!-- Search and filter options could be added here -->
+    
+    <!-- Responsive table - visible on medium and larger screens -->
+    <div class="hidden md:block overflow-x-auto overflow-y-auto">
+      <table class="table-auto w-full border-collapse border border-gray-300 shadow-lg rounded-lg overflow-hidden">
+        <thead>
+          <tr class="bg-blue-500 text-white">
+            <th class="border border-gray-300 px-4 py-2">Title</th>
+            <th class="border border-gray-300 px-4 py-2">ISBN</th>
+            <th class="border border-gray-300 px-4 py-2">Author</th>
+            <th class="border border-gray-300 px-4 py-2 hidden lg:table-cell">Publication</th>
+            <th class="border border-gray-300 px-4 py-2">Price</th>
+            <th class="border border-gray-300 px-4 py-2 hidden lg:table-cell">Condition</th>
+            <th class="border border-gray-300 px-4 py-2">Quantity</th>
+            <th class="border border-gray-300 px-4 py-2 hidden lg:table-cell">Owner</th>
+            <th class="border border-gray-300 px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of books" class="hover:bg-gray-100 transition duration-200">
+            <td class="border border-gray-300 px-4 py-2 text-center">{{ book.book_name }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{book.book_isbn }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ book.book_author }}</td>
+            <td class="border border-gray-300 px-4 py-2 hidden lg:table-cell">{{ book.book_publication }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ book.book_price }}</td>
+            <td class="border border-gray-300 px-4 py-2 hidden lg:table-cell">{{ book.book_condition}}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ book.book_quantity}}</td>
+            <td class="border border-gray-300 px-4 py-2 hidden lg:table-cell">{{ book.owner_email}}</td>
+            <td class="border border-gray-300 px-4 py-2 text-center">
+              <button class="text-blue-600 hover:text-blue-800 p-2"><i class="fas fa-edit text-l"></i></button>
+              <button class="text-red-600 hover:text-red-800 p-2"><i class="fas fa-trash text-l"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Card view for small screens -->
+    <div class="grid grid-cols-1 gap-4 md:hidden">
+      <div *ngFor="let book of books" class="bg-white p-4 rounded-lg shadow-md border border-gray-200">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="font-bold text-lg text-blue-600">{{ book.book_name }}</h3>
+          <div class="flex space-x-1">
+            <button class="text-blue-600 hover:text-blue-800 p-1"><i class="fas fa-edit"></i></button>
+            <button class="text-red-600 hover:text-red-800 p-1"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-2 text-sm">
+          <div>
+            <p class="font-semibold">ISBN:</p>
+            <p>{{ book.book_isbn }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Author:</p>
+            <p>{{ book.book_author }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Price:</p>
+            <p>{{ book.book_price }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Quantity:</p>
+            <p>{{ book.book_quantity }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Condition:</p>
+            <p>{{ book.book_condition }}</p>
+          </div>
+          <div>
+            <p class="font-semibold">Publication:</p>
+            <p>{{ book.book_publication }}</p>
+          </div>
+          <div class="col-span-2">
+            <p class="font-semibold">Owner:</p>
+            <p>{{ book.owner_email }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pagination controls could be added here -->
+    <div *ngIf="loading" class="flex justify-center items-center p-8">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  </div>
+</div>

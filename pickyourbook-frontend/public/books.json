@@ -1,0 +1,79 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "book_isbn": "1111111111111",
+      "book_name": "The Time Machine",
+      "book_author": "H.G Wells",
+      "book_price": 876.00,
+      "book_publication": "Pageturner",
+      "book_condition": "Brand new",
+      "book_quantity": 1,
+      "category_id": 2,
+      "subcategory_id": 5,
+      "subsubcategory_id": 4,
+      "book_pic": "pictures/Si6qzGcVOU4PUeCZ6wprswxAyMU8Rq7025Dut3IC....",
+      "owner_email": "asiya@gmail.com"
+    },
+    {
+      "id": 2,
+      "book_isbn": "2222222222222",
+      "book_name": "Lord of The Rings",
+      "book_author": "J.R.R. TOLKINE",
+      "book_price": 654.00,
+      "book_publication": "Pageturner",
+      "book_condition": "0",
+      "book_quantity": 1,
+      "category_id": 1,
+      "subcategory_id": 3,
+      "subsubcategory_id": 3,
+      "book_pic": "pictures/5VmV3XtOEVtBQ8pMWBxo4F5oJjTsgSsKcxGSANUA....",
+      "owner_email": "aditi@gmail.com"
+    },
+    {
+      "id": 3,
+      "book_isbn": "3333333333333",
+      "book_name": "JAVA, A Beginner's Guide",
+      "book_author": "Herbert Schildt",
+      "book_price": 512.00,
+      "book_publication": "ORACAl",
+      "book_condition": "1",
+      "book_quantity": 1,
+      "category_id": 4,
+      "subcategory_id": 7,
+      "subsubcategory_id": 8,
+      "book_pic": "pictures/pxkxcg0T1Fwha60g9WiatEMn1DynYy9YRS4sPqC1....",
+      "owner_email": "ti.jagrit@gmail.com"
+    },
+    {
+      "id": 4,
+      "book_isbn": "4444444444444",
+      "book_name": "Programming Basic with C#",
+      "book_author": "Dr. SVETLIN NAKOV",
+      "book_price": 324.00,
+      "book_publication": "SoftUni Foundation",
+      "book_condition": "1",
+      "book_quantity": 1,
+      "category_id": 4,
+      "subcategory_id": 7,
+      "subsubcategory_id": 8,
+      "book_pic": "pictures/gLFmnAP2yTuud1JgLqHIsDkEA6v7YWjGeTM9vWFV....",
+      "owner_email": "anjanashakya65@gmail.com"
+    },
+    {
+      "id": 5,
+      "book_isbn": "5555555555555",
+      "book_name": "IRON MAN",
+      "book_author": "Marvel",
+      "book_price": 879.00,
+      "book_publication": "Marvel",
+      "book_condition": "0",
+      "book_quantity": 1,
+      "category_id": 3,
+      "subcategory_id": 2,
+      "subsubcategory_id": 1,
+      "book_pic": "pictures/4fKs5MmRqjz5WCL7ZNTG0ZIAdlbmfb1IUE5nuyZu....",
+      "owner_email": "binayak@gmail.com"
+    }
+  ]
+}

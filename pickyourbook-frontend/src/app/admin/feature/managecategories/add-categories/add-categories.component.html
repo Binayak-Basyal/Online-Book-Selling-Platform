@@ -1,0 +1,89 @@
+<div class="min-h-screen flex flex-col justify-center items-center p-2 bg-gray-50">
+
+  <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Category Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Category</h2>
+      <form [formGroup]="categoryForm" (ngSubmit)="onCategorySubmit()" class="space-y-4">
+        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+        <input type="text" id="category" placeholder="Enter Category" formControlName="category_name"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        <div class="flex space-x-2">
+          <button type="submit"
+            class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            {{ isEditing && editingCategoryId ? 'Update' : 'Add' }}
+          </button>
+          <button *ngIf="isEditing && editingCategoryId" type="button" (click)="cancelEdit()"
+            class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Sub Category Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Sub Category</h2>
+      <form [formGroup]="subCategoryForm" (ngSubmit)="onSubCategorySubmit()" class="space-y-4">
+        <label for="categoryDropdown" class="block text-sm font-medium text-gray-700">Category</label>
+        <select id="categoryDropdown" formControlName="category_id"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.category_name}}
+          </option>
+        </select>
+
+        <label for="subcategory" class="block text-sm font-medium text-gray-700">Sub Category</label>
+        <input type="text" id="subcategory" placeholder="Enter Sub Category" formControlName="subcategory_name"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        <div class="flex space-x-2">
+          <button type="submit"
+            class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            {{ isEditing && editingSubCategoryId ? 'Update' : 'Add' }}
+          </button>
+          <button *ngIf="isEditing && editingSubCategoryId" type="button" (click)="cancelEdit()"
+            class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Sub SubCategory Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Sub SubCategory</h2>
+      <form [formGroup]="subSubCategoryForm" (ngSubmit)="onSubSubCategorySubmit()" class="space-y-4">
+        <label for="categoryDropdown" class="block text-sm font-medium text-gray-700">Category</label>
+
+        <select id="categoryDropdown" formControlName="category_id"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.category_name}}</option>
+        </select>
+
+
+        <label for="subcategoryDropdown" class="block text-sm font-medium text-gray-700">Sub Category</label>
+        <select id="subcategoryDropdown" formControlName="subcategory_id"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option value="" disabled selected>Select Sub Category</option>
+          <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{subcategory.subcategory_name}}
+          </option>
+        </select>
+
+        <label for="subsubcategory" class="block text-sm font-medium text-gray-700">Sub SubCategory</label>
+        <input type="text" id="subsubcategory" placeholder="Enter Sub SubCategory" formControlName="subsubcategory_name"
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        <div class="flex space-x-2">
+          <button type="submit"
+            class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            {{ isEditing && editingSubSubCategoryId ? 'Update' : 'Add' }}
+          </button>
+          <button *ngIf="isEditing && editingSubSubCategoryId" type="button" (click)="cancelEdit()"
+            class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+.hero-carousel {
+  position: relative;
+  
+  .carousel-slide {
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  // Fade animation
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  
+  // Improve button hover effect
+  button {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  // Style navigation dots
+  .carousel-dots {
+    button {
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+// Ensure image responsiveness
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Optional: Add smooth hover animations */
+.group:hover .group-hover\:from-blue-500 {
+  background-image: linear-gradient(to bottom right, rgb(59 130 246), rgb(29 78 216));
+}

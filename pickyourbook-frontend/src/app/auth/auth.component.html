@@ -1,0 +1,21 @@
+<div class="min-h-screen w-full flex justify-center items-center p-3 md:p-4 lg:p-5 bg-[#041851]">
+
+  <div class="main w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 rounded-lg overflow-hidden shadow-lg">
+
+    <!-- Info section - Full width on mobile, 1/2 on larger screens -->
+    <div class="info bg-blue-900 text-white p-4 md:p-5 lg:p-6 flex flex-col items-center justify-center">
+      <p class="text-base md:text-lg">Welcome to</p>
+      <p class="font-semibold mt-2 text-lg md:text-xl lg:text-2xl">PICK YOUR BOOKS</p>
+      <div class="w-full max-w-[150px] mt-4">
+        <img src="logo.png" alt="Pick Your Books Logo" class="w-full h-auto">
+      </div>
+    </div>
+
+    <!-- Form section - Full width on mobile, 1/2 of container on larger screens -->
+    <div class="forms bg-white p-4 md:p-5 lg:p-6 flex justify-center items-center">
+      <router-outlet />
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,30 @@
+<div class="flex flex-col h-[95%]">
+  <div>
+    <form [formGroup]="userSearchForm" (ngSubmit)="onSubmit()" class="space-y-2">
+      <input type="text" placeholder="Search users" name="search" id="search" formControlName="search"
+        class="w-full p-1 rounded-md placeholder-gray-400 placeholder:text-xs border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent shadow-sm">
+    </form>
+  </div>
+  <div *ngIf="loading" class="text-gray-500 p-4">Loading users...</div>
+  <div *ngIf="!loading" class="flex-1 overflow-y-auto">
+    <ul class="space-y-1 p-2">
+      <li
+        *ngFor="let user of users"
+        (click)="openConversation(user)"
+        [class.bg-blue-100]="selectedUserId === user.id"
+        class="flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
+        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-violet-600 text-white font-bold text-sm">
+          {{ (user.full_name || user.email || 'U').charAt(0).toUpperCase() }}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="font-medium text-gray-900 truncate">
+            {{ user.full_name || user.email || 'Unknown User' }}
+          </div>
+          <div *ngIf="user.unread_count" class="text-xs text-pink-600 font-medium">
+            {{ user.unread_count }} unread
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

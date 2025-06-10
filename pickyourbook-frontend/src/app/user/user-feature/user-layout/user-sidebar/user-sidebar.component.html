@@ -1,0 +1,61 @@
+<div class="flex flex-col h-full bg-gray-100 p-4 shadow-inner border-1 overflow-auto">
+  <h3 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Book Categories</h3>
+
+  <!-- Category Accordion -->
+  <div class="border-b border-gray-200">
+    <a (click)="showAllBooks()"
+       class="block w-full p-3 justify-center text-center hover:text-blue-600 font-medium transition-colors cursor-pointer">
+      All Books
+    </a>
+  </div>
+  <div *ngFor="let category of categories" class="border border-gray-200 rounded bg-white overflow-hidden">
+
+    <!-- Category Header -->
+    <div class="flex items-center">
+      <a (click)="filterByCategory(category.id)"
+         class="flex-1 capitalize p-3 hover:text-blue-600 font-medium transition-colors cursor-pointer">
+        {{ category.category_name }}
+      </a>
+      <button (click)="toggleCategory(category.id)"
+              class="p-3 focus:outline-none hover:shadow-xl hover:text-blue-500 hover:cursor-pointer ">
+        <svg [class.transform]="openCategories.includes(category.id)"
+          [class.rotate-180]="openCategories.includes(category.id)" class="w-4 h-4 transition-transform duration-200"
+          viewBox="0 0 24 24">
+          <path fill="currentColor" d="M7 10l5 5 5-5z" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Subcategories -->
+    <div *ngIf="openCategories.includes(category.id)" class="border-t border-gray-200">
+      <div *ngFor="let subcategory of getSubcategoriesForCategory(category.id)" class="pl-4">
+        <!-- Subcategory Header -->
+        <div class="flex items-center">
+          <a (click)="filterBySubcategory(category.id, subcategory.id)"
+             class="flex-1 capitalize p-2 hover:text-blue-600 text-sm transition-colors cursor-pointer">
+            {{ subcategory.subcategory_name }}
+          </a>
+          <button (click)="toggleSubcategory(subcategory.id)"
+            class="p-2 focus:outline-none hover:shadow-xl hover:text-blue-500 hover:cursor-pointer ">
+            <svg *ngIf="hasSubsubcategories(subcategory.id)"
+              [class.transform]="openSubcategories.includes(subcategory.id)"
+              [class.rotate-180]="openSubcategories.includes(subcategory.id)"
+              class="w-3 h-3 transition-transform duration-200" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M7 10l5 5 5-5z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Subsubcategories -->
+        <div *ngIf="openSubcategories.includes(subcategory.id)" class="pl-4 border-l border-gray-100 ml-3">
+          <div *ngFor="let subsubcategory of getSubsubcategoriesForSubcategory(subcategory.id)" class="py-1">
+            <a (click)="filterBySubsubcategory(category.id, subcategory.id, subsubcategory.id)"
+               class="block text-xs py-1 px-2 hover:bg-blue-50 hover:text-blue-600 rounded capitalize cursor-pointer">
+              {{ subsubcategory.subsubcategory_name }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

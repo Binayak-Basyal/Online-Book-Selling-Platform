@@ -1,0 +1,39 @@
+<div class="h-[90%] p-2 flex flex-col bg-gray-50 shadow-md rounded-lg">
+  <div class="sticky top-0 bg-white">
+    <div *ngIf="user" class="flex items-center gap-3 mb-4 bg-blue-50 p-3 rounded shadow">
+      <div class="w-10 h-10 flex items-center justify-center rounded-full bg-violet-600 text-white font-bold text-lg">
+        {{ (user.full_name || user.email || 'U').charAt(0).toUpperCase() }}
+      </div>
+      <div>
+        <div class="font-medium text-gray-900">{{ user.full_name || user.email || 'Unknown User' }}</div>
+        <div class="text-xs text-gray-500">{{ user.email }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="flex-1 overflow-y-auto" #messagesContainer>
+    <div class="space-y-2 pr-1">
+      <div *ngIf="isLoadingMore" class="text-center text-gray-500 py-2">Loading older messages...</div>
+      <div *ngIf="loading" class="text-gray-500">Loading messages...</div>
+      <div *ngIf="!loading && messages.length === 0" class="text-gray-400">No messages yet.</div>
+      <div *ngFor="let msg of messages" class="flex"
+        [ngClass]="{ 'justify-start': msg.sender_id === userId, 'justify-end': msg.sender_id !== userId }">
+        <div [ngClass]="{
+              'bg-violet-600 text-white': msg.sender_id === userId,
+              'bg-gray-200 text-gray-900': msg.sender_id !== userId
+            }" class="rounded-lg px-4 py-2 max-w-xs break-words">
+          <div class="text-sm">{{ msg.message }}</div>
+          <div class="text-xs text-right opacity-60 mt-1">{{ msg.created_at | date:'short' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sticky bottom-0 bg-white pt-2">
+    <form class="flex gap-2" (ngSubmit)="sendMessage()">
+      <input [(ngModel)]="newMessage" name="newMessage" required autocomplete="off" placeholder="Type your message..."
+        class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-400" />
+      <button type="submit" [disabled]="!newMessage.trim()" class="bg-violet-600 text-white px-4 py-2 rounded">
+        Send
+      </button>
+    </form>
+  </div>
+</div>

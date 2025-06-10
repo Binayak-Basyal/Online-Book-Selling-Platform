@@ -1,0 +1,102 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">My Books</h1>
+    <button (click)="toggleAddBookPopup('add')" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+      Add New Book
+    </button>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded mb-4">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="flex justify-center py-8">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+
+  <!-- No books message -->
+  <div *ngIf="!isLoading && books.length === 0" class="text-center py-8 text-gray-500">
+    You haven't added any books yet. Click the "Add New Book" button to get started.
+  </div>
+
+  <!-- Books table -->
+  <div *ngIf="!isLoading && books.length > 0" class="mt-5">
+    <table class="table-auto w-full border-collapse border border-gray-300">
+      <!-- Table header -->
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2">S.N</th>
+          <th class="border border-gray-300 px-4 py-2">Book Name</th>
+          <th class="border border-gray-300 px-4 py-2">Author</th>
+          <th class="border border-gray-300 px-4 py-2">Price</th>
+          <th class="border border-gray-300 px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <!-- Table body -->
+      <tbody>
+        <tr *ngFor="let book of books; let i = index; trackBy: trackByBookId" class="hover:bg-gray-50">
+          <td class="border border-gray-300 px-4 py-2">{{ i + 1 }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ book.book_name }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ book.book_author }}</td>
+          <td class="border border-gray-300 px-4 py-2">${{ book.book_price }}</td>
+          <td class="border border-gray-300 px-4 py-2 flex space-x-2">
+            <button (click)="viewBook(book)"
+              class="px-2 py-1 text-green-500 rounded hover:bg-green-500 hover:text-white flex items-center">
+              <i class="fas fa-eye mr-1"></i>
+            </button>
+            <button (click)="editBook(book)"
+              class="px-2 py-1 text-yellow-500  rounded hover:bg-yellow-500 hover:text-white flex items-center">
+              <i class="fas fa-edit mr-1"></i>
+            </button>
+            <button (click)="deleteBook(book)"
+              class="px-2 py-1 text-red-500  rounded hover:bg-red-500 hover:text-white flex items-center">
+              <i class="fas fa-trash mr-1"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal/Popup for AddBooks with default router-outlet -->
+  <div *ngIf="showAddBookPopup" class="fixed inset-0 flex items-center justify-center z-50"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="bg-white rounded-lg p-5 w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
+      <button (click)="toggleAddBookPopup('close')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+        <span class="text-2xl">&times;</span>
+      </button>
+      <app-add-books [mode]="popupMode" [book]="selectedBook" (formSubmitted)="onBookAdded($event)"
+        (cancel)="toggleAddBookPopup('close')"></app-add-books>
+    </div>
+  </div>
+
+  <!-- Success Toast Notification -->
+  <div *ngIf="showSuccessMessage"
+    class="fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-md z-50">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3">
+        <p class="text-sm">{{ successMessage }}</p>
+      </div>
+      <div class="ml-auto pl-3">
+        <div class="-mx-1.5 -my-1.5">
+          <button (click)="showSuccessMessage = false"
+            class="inline-flex bg-green-100 text-green-500 rounded-md p-1.5 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            <svg class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

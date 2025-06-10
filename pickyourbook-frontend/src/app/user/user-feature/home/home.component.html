@@ -1,0 +1,41 @@
+<div class="flex flex-col lg:flex-row justify-center pt-4 pb-4 items-center space-y-8 lg:space-y-0 lg:space-x-8 bg-blue-100 ">
+  <!-- Welcome Section -->
+  <div class="flex flex-col justify-center items-center w-full lg:w-3/9 text-center space-y-4">
+    <h1 class="text-4xl font-bold text-gray-800">WELCOME</h1>
+    <img src="/logo.png" alt="Logo" class="w-24 h-24">
+    <h2 class="text-2xl font-semibold text-blue-500">PICK YOUR BOOK</h2>
+    <p class="text-gray-600 leading-relaxed">
+      Discover a world of books at Pick Your Book! Whether you're looking to buy or sell, we offer a diverse
+      selection of both new and used books. Connect with fellow book lovers and find great deals on your favorite reads.
+    </p>
+  </div>
+
+  <div class=" relative h-[500px] w-3/5 overflow-hidden rounded-xl shadow-lg">
+    <!-- Carousel slides -->
+    <div *ngFor="let slide of heroSlides; let i = index"
+      class="absolute inset-0 w-full h-full transition-transform duration-1000 ease-in-out"
+      [style.transform]="currentSlide === i ? 'translateX(0)' : 'translateX(100%)'"
+      [class.z-10]="currentSlide === i" [class.z-0]="currentSlide !== i">
+      <!-- Image background -->
+      <img [src]="slide.imageUrl" alt="Carousel image" class="w-full h-full object-cover">
+
+      <!-- Content overlay -->
+      <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex flex-col justify-center px-12">
+      <div class="max-w-lg text-white mt-80">
+        <p class="text-lg mb-6">{{slide.description}}</p>
+        <button
+        class="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+        {{slide.buttonText}}
+        </button>
+      </div>
+      </div>
+    </div>
+       <!-- Carousel Controls -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
+      <button *ngFor="let slide of heroSlides; let i = index"
+        class="w-4 h-4 rounded-full border-2 border-white cursor-pointer bg-blue-400 transition-all duration-300"
+        [class.bg-blue-700]="currentSlide === i"
+        (click)="currentSlide = i"></button>
+    </div>
+  </div>
+</div>
