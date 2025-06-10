@@ -1,0 +1,103 @@
+mistake 1:
+yo command run gara 
+composer require laravel/sanctum
+
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+
+
+Mistake 2:
+model ma user contact xutexa ani yesma hasfactory and usertokens hau
+
+
+Mistake 3 :yekchoti authcontroller hera hai
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
+class AuthController extends Controller
+{
+    /**
+     * Register a new user.
+     */
+    public function register(Request $request)
+    {
+        // Validate incoming request
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:15',
+            'address' => 'required|string', // Set to required to match DB schema
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|confirmed|min:8',
+            'user_pic' => 'nullable|image',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        // Handle image upload if present
+        $userPicPath = null;
+        if ($request->hasFile('user_pic')) {
+            $userPicPath = $request->file('user_pic')->store('user_pics', 'public');
+        }
+
+        // Create a new user
+        $user = User::create([
+            'full_name' => $request->full_name,
+            'contact' => $request->phone,
+            'address' => $request->address,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'user_pic' => $userPicPath,
+        ]);
+
+        return response()->json(['message' => 'User registered successfully'], 201);
+    }
+
+    /**
+     * Login user and return a token.
+     */
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+            $token = $user->createToken('YourAppName')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Login successful',
+                'token' => $token,
+            ]);
+        }
+
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    /**
+     * Logout user and revoke the token.
+     */
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+        $user->tokens()->delete();
+
+        return response()->json(['message' => 'Logged out successfully']);
+    }
+}
+
+Result:user login,register
+admin -can get users aru check garko xaina hai

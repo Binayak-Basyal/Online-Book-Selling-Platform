@@ -1,0 +1,30 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Allow direct access to storage files
+    RewriteCond %{REQUEST_URI} ^/storage/.*
+    RewriteRule ^ - [L]
+    
+    # Allow access to storage files
+    RewriteEngine On
+    RewriteRule ^storage/(.*)$ storage/$1 [L]
+    
+    # Handle normal Laravel routes
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Set proper permissions for storage directory
+<IfModule mod_headers.c>
+    <FilesMatch "^\.">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
